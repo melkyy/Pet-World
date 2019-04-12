@@ -1,5 +1,7 @@
 {
   "name": "Pet-World",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
