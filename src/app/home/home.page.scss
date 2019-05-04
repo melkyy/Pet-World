@@ -1,1 +1,21 @@
+ion-content{
+      --background: #D36135;
+}
 
+$colors: (
+    primary:    #36c2d6,
+    secondary:  #32db64,
+    danger:     #f53d3d,
+    light:      #f4f4f4,
+    dark:       #222,
+    twitter:    #55acee,
+       
+  );
+
+  $background-color: #fbc691 !default;
+     .body{
+      height: 100%;
+      background-color: #fbc691;
+     }
+
+ 
