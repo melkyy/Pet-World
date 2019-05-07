@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial/ngx';
 import { ToastController } from '@ionic/angular';
+import { InternalFormsSharedModule } from '@angular/forms/src/directives';
+import {ModalController} from '@ionic/angular';
+import {ModalShopPage} from '../modal-shop/modal-shop.page';
 
 
 @Component({
@@ -16,13 +19,23 @@ export class BluethootPage implements OnInit {
   DataSend:string;
   Conectado:boolean=false;
   monedas:number=0;
-  constructor(private Bluethoot: BluetoothSerial,private toastCtrl: ToastController ) { }
+  constructor(private Bluethoot: BluetoothSerial,private toastCtrl: ToastController, public modalController:ModalController ) { }
 
   ngOnInit() {
    
     this.checkBluetoothEnabled();
   }
 
+  Mostrar(){
+    this.toast("jalo");
+  }
+async MostrarModal(){
+  
+  const modal=await this.modalController.create({
+    component:ModalShopPage
+  });
+  return await modal.present();
+}
   checkBluetoothEnabled() {
     this.Bluethoot.isEnabled().then(success => {
       this.listPairedDevices();
@@ -36,8 +49,6 @@ export class BluethootPage implements OnInit {
     this.Bluethoot.list().then(success=>{
       this.pairedList=success;
       this.listToggle=true;
-
-
     },error=>{
       this.toast("Inicializa Bluethoot")
       
@@ -88,9 +99,6 @@ export class BluethootPage implements OnInit {
   handleData(data) {
       this.monedas+=parseInt(data);
       this.toast("Se ha agregado una moneda a la alcancia!");
-      
-    
-    
   }
 
   showError(error) {
@@ -110,4 +118,8 @@ interface pairedList{
 "id":string
 "adress":string,
 "name":string 
+}
+
+interface Pet{
+  "idAccesorio":number
 }

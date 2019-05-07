@@ -12,6 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import{ToastrModule} from 'ngx-toastr';
 import {BluetoothSerial} from '@ionic-native/bluetooth-serial/ngx';
 
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
