@@ -29,8 +29,7 @@ export class BluethootPage implements OnInit {
   Mostrar(){
     this.toast("jalo");
   }
-async MostrarModal(){
-  
+async MostrarModal(){  
   const modal=await this.modalController.create({
     component:ModalShopPage
   });
@@ -72,7 +71,7 @@ async MostrarModal(){
     this.Conectado=true;
     this.Bluethoot.connect(address).subscribe(success => {
       this.deviceConnected();
-      
+      this.toast("Dispositivo conectado");
     }, error => {
       this.toast("Error al conectar el dispositivo");
       this.Conectado=false;

@@ -11,12 +11,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import{ToastrModule} from 'ngx-toastr';
 import {BluetoothSerial} from '@ionic-native/bluetooth-serial/ngx';
-
+import {ModalShopPageModule} from './paginas/modal-shop/modal-shop.module';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, ToastrModule.forRoot(),BrowserAnimationsModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, ToastrModule.forRoot(),BrowserAnimationsModule,ModalShopPageModule],
   providers: [
     StatusBar,
     SplashScreen,
