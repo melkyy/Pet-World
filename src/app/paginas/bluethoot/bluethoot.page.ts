@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,  ChangeDetectorRef } from '@angular/core';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial/ngx';
-import { ToastController } from '@ionic/angular';
-import { InternalFormsSharedModule } from '@angular/forms/src/directives';
-import {ModalController} from '@ionic/angular';
-import {ModalShopPage} from '../modal-shop/modal-shop.page';
+import { ToastController,NavController } from '@ionic/angular';
+import {ExtrasService} from '../../extras.service';
+import { LoadingController } from '@ionic/angular';
+
 
 
 @Component({
@@ -13,112 +13,122 @@ import {ModalShopPage} from '../modal-shop/modal-shop.page';
 })
 export class BluethootPage implements OnInit {
 
-  pairedList:pairedList;
-  pairedDeviceID:number=0;
-  listToggle:boolean=true;
-  DataSend:string;
-  Conectado:boolean=false;
-  monedas:number=0;
-  constructor(private Bluethoot: BluetoothSerial,private toastCtrl: ToastController, public modalController:ModalController ) { }
+  pairedList: pairedList;
+  pairedDeviceID: number = 0;
+  listToggle: boolean = true;
+  
+  constructor(private Bluethoot: BluetoothSerial,
+     private ref: ChangeDetectorRef ,
+     private toastCtrl: ToastController, 
+     public loading:LoadingController,
+     private nav:NavController,
+     public Data:ExtrasService
+     ) { }
 
-  ngOnInit() {
-   
+  async ngOnInit() {
+
     this.checkBluetoothEnabled();
+    this.listPairedDevices();
   }
 
-  Mostrar(){
-    this.toast("jalo");
+  async presentLoading() {
+    const loading = await this.loading.create({
+      message: 'Cargando'
+    });
+    await loading.present();
   }
-async MostrarModal(){  
-  const modal=await this.modalController.create({
-    component:ModalShopPage
-  });
-  return await modal.present();
-}
   checkBluetoothEnabled() {
     this.Bluethoot.isEnabled().then(success => {
       this.listPairedDevices();
-      
+      this.checkBluetoothIsConected();
     }, error => {
-      this.toast("No esta conectado");
-      this.Conectado=false;
+      this.toast("No esta conectado a bluethoot");
+      
     });
   }
-  listPairedDevices(){
-    this.Bluethoot.list().then(success=>{
-      this.pairedList=success;
-      this.listToggle=true;
+
+  checkBluetoothIsConected(){
+    this.Bluethoot.isConnected().then(success=>{
+      this.toast(success);
     },error=>{
+      this.toast("Conectese a un dispositivo");
+    });
+  }
+  listPairedDevices() {
+    this.Bluethoot.list().then(success => {
+      this.pairedList = success;
+      this.listToggle = true;
+    }, error => {
       this.toast("Inicializa Bluethoot")
+    });
+
+  }
+
+  selectDevice() {
+   
+     let connectedDevice = this.pairedList[this.pairedDeviceID];
+     if (!connectedDevice.address) {
+      this.toast("Selecciona dispositivo para conectar");
+       return;
+     }
+    let address = connectedDevice.address;
+    this.connect(address);
+  }
+
+
+  AbrirPet() {
+   
+
+  }
+  connect(address) {
+    this.presentLoading();
+    this.Bluethoot.connect(address).subscribe(async (success) => {
+      this.loading.dismiss();
+      this.Data.setExtra(address);
+      this.Bluethoot.disconnect();
+      this.nav.navigateRoot("/pet");
+    }, error => {
+      this.loading.dismiss();
+      this.toast("Error al conectar el dispositivo");
       
     });
-
   }
 
-  selectDevice(){
-    let connectedDevice = this.pairedList[this.pairedDeviceID];
-    if (!connectedDevice.address) {
-      this.toast("Selecciona dispositivo para conectar")
-      return;
-    }
-    let address = connectedDevice.address;
-    let name = connectedDevice.name;
-
-    this.connect(address);
-
-  }
-  connect(address){
-    this.Conectado=true;
-    this.Bluethoot.connect(address).subscribe(success => {
-      this.deviceConnected();
-      this.toast("Dispositivo conectado");
-    }, error => {
-      this.toast("Error al conectar el dispositivo");
-      this.Conectado=false;
-    });
-  }   
-
-  deviceConnected() {
-    // Subscribe to data receiving as soon as the delimiter is read
-    this.Bluethoot.subscribe('\n').subscribe(success => {
-     
-      this.handleData(success);
-    }, error => {
-      this.Conectado=false;
-      this.showError(error);
-    });
-  }
-
-  deviceDisconnected() {
-    // Unsubscribe from data receiving
-    this.Bluethoot.disconnect();
+  // deviceConnected() {
+  
+  //   const datos = 
+  //   this.Bluethoot.subscribe('\n').subscribe(success => {
+  //     // this.handleData(success);
+  //     this.ref.detectChanges();
+  //   }, error => {
     
-  }
+  //     this.loading.dismiss();
+  //     // this.showError(error);
+  //   });
+  // }
 
-  handleData(data) {
-      this.monedas+=parseInt(data);
-      this.toast("Se ha agregado una moneda a la alcancia!");
-  }
 
-  showError(error) {
-    this.toast(error);
-  }
-  async toast(data){
+
+  // handleData(data) {
+  //   this.monedas += parseInt(data);
+   
+  // }
+
+  // showError(error) {
+  //   this.toast(error);
+  // }
+  async toast(data) {
     const toast = await this.toastCtrl.create({
       message: data,
       duration: 1000
     });
-   return await toast.present();
+    return await toast.present();
   }
 
 }
-interface pairedList{
-"class":number,
-"id":string
-"adress":string,
-"name":string 
-}
-
-interface Pet{
-  "idAccesorio":number
+interface pairedList {
+  "class": number,
+  "id": string
+  "adress": string,
+  "name": string
 }

@@ -9,7 +9,7 @@ h1{
 }
 #pet{
     position: absolute;
-    top: 20%;
+    top: 30%;
     left: 21%;
 
 }
@@ -18,6 +18,27 @@ h1{
     bottom: 0;
     right: 0;
 }
+#background{
+  background-image: url('../../../assets/forest.png');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: bottom; 
+  position: "absolute";
+  height: 100%;
+  width: 100%;
+ 
+}
+#spiner{
+  position: absolute;
+  top: 50%;
+  left: 30%;
+}
+.modal {
+  background: rgba(0,0,0,0.5);
+  }
+  .modal-content{
+    height: 100vh;
+  }
 .toast-center-center {
     top: 50%;
     left: 50%;

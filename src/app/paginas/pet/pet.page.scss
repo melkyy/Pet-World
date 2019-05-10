@@ -1,0 +1,47 @@
+.coins{
+    position: absolute;
+    top:5px;
+    right: 10%; 
+}
+
+ ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+   ul li { display: inline-block; }
+   h1{
+       position: relative;
+       top:5px;
+   }
+#pet{
+    position: absolute;
+    top: 30%;
+    left: 21%;
+
+}
+#shop{
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+}
+#analytics{
+    position: absolute;
+    top: 5px;
+    left: 5px;
+}
+#background{
+  background-image: url('../../../assets/forest.png');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: bottom; 
+  position: "absolute";
+  height: 100%;
+  width: 100%;
+ 
+}
+#spiner{
+  position: absolute;
+  top: 50%;
+  left: 25%;
+}
