@@ -1,21 +1,52 @@
-ion-content{
-      --background: #D36135;
+ion-content {
+    --background: #f4f4f4;
 }
 
-$colors: (
-    primary:    #36c2d6,
-    secondary:  #32db64,
-    danger:     #f53d3d,
-    light:      #f4f4f4,
-    dark:       #222,
-    twitter:    #55acee,
-       
-  );
+$colors: ( primary: #36c2d6, secondary: #32db64, danger: #f53d3d, light: #f4f4f4, dark: #222, twitter: #55acee, );
+$background-color: #fbc691 !default;
+.body {
+    height: 100%;
+    background-color: #fbc691;
+}
 
-  $background-color: #fbc691 !default;
-     .body{
-      height: 100%;
-      background-color: #fbc691;
-     }
+#background {
+    background-image: url('../../assets/loginf.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: bottom;
+    position: "absolute";
+    height: 100%;
+    width: 100%;
+}
 
- 
+.container {
+    width: 250px;
+    height: 200px;
+}
+
+.container img {
+    width: 100%;
+    height: auto;
+}
+
+.centrado {
+    position: fixed;
+    top: 20%;
+    left: 45%;
+    margin-top: -50px;
+    margin-left: -95px;
+}
+
+.centradoBoton {
+    position: fixed;
+    top: 65%;
+    margin-top: -50px;
+    width: 100%;
+}
+
+.centradoBoton2 {
+    position: fixed;
+    top: 60%;
+    margin-top: -50px;
+    width: 100%;
+}
