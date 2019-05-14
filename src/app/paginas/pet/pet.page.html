@@ -1,9 +1,110 @@
 
-<ion-content >
+<ion-content class="body" >
   <div id="background">
   <div class="coins"><ul><li class="postop"><img src="../../../assets/coin.png" width="90" height="90"></li><li><h1>{{monedas}}</h1></li></ul></div>
-  <img  src="../../../assets/Fox1.gif" alt="" width="200" height="300" id="pet">
-  <div (click)="AbrirEstadisticas()"><img src="../../../assets/statistics.png" width="100" height="100" id="analytics"></div>
-  <div (click)="AbrirPetShop()" ><img src="../../../assets/shop.ico"  alt="" width="100" height="100" id="shop"></div>
+  <img  src="../../../assets/Fox1.gif" *ngIf="Vestido==0" alt="" width="200" height="300" id="pet">
+  <img  src="../../../assets/Fox2.gif" *ngIf="Vestido==1" alt="" width="200" height="300" id="pet">
+  <img  src="../../../assets/Fox3.gif" *ngIf="Vestido==2" alt="" width="200" height="300" id="pet">
+  <img  src="../../../assets/Fox4.gif" *ngIf="Vestido==3" alt="" width="200" height="300" id="pet">
+  <div (click)="ModalStadistics.show()"><img src="../../../assets/statistics.png" width="100" height="100" id="analytics"></div>
+  <div (click)="ModalShop.show()" ><img src="../../../assets/shop.ico"  alt="" width="100" height="100" id="shop"></div>
+</div>
+
+<div mdbModal #ModalShop="mdbModal" class="modal fade " tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true" [config]="{backdrop: false, ignoreBackdropClick: true}">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+       
+        <h4 class="modal-title w-10" id="myModalLabel">Tienda</h4><h4 class="modal-title w-90" id="myModalLabel">(Monedas:{{monedas}})</h4>
+      </div>
+      <div class="modal-body">
+        <ion-card class="cardShop">
+          <ion-card-header>
+            <img src="../../../assets/Fox2.png" width="150" height="200">
+          </ion-card-header>
+        
+          <ion-card-content>
+              
+              <h3>30.00$</h3>
+             
+              <br>
+              <ion-button  color="success" (click)="Comprar(1)"  *ngIf="Compra1" >
+                  <ion-icon name="logo-usd" ></ion-icon>&nbsp;Comprar
+                </ion-button >
+                <ion-button  color="primary" (click)="Vestir(1)" *ngIf="!Compra1"   >
+                    <ion-icon name="ios-shirt" ></ion-icon>&nbsp;Vestir
+                  </ion-button >
+          </ion-card-content>
+        </ion-card>
+        <ion-card class="cardShop">
+          <ion-card-header>
+            <ion-card-header>
+                <img src="../../../assets/Fox3.png"  width="150" height="200" >
+            </ion-card-header>
+          </ion-card-header>
+        
+          <ion-card-content>
+            
+              <h3>100.00$</h3>
+             
+            <br>
+            <ion-button  color="success" (click)="Comprar(2)" *ngIf="Compra2" >
+                <ion-icon name="logo-usd"  ></ion-icon>&nbsp;Comprar
+              </ion-button >
+              <ion-button  color="primary"  (click)="Vestir(2)" *ngIf="!Compra2">
+                  <ion-icon name="ios-shirt"   ></ion-icon>&nbsp;Vestir
+                </ion-button >
+          </ion-card-content>
+        </ion-card>
+        <ion-card class="cardShop">
+          <ion-card-header>
+            <ion-card-header>
+                <img src="../../../assets/Fox4.png" width="150" height="200">
+            </ion-card-header>
+          </ion-card-header>
+        
+          <ion-card-content>
+              
+              <h3>150.00$</h3>
+             
+            <br>
+            <ion-button  color="success" (click)="Comprar(3)" *ngIf="Compra3" >
+                <ion-icon name="logo-usd"   ></ion-icon>&nbsp;Comprar
+              </ion-button >
+              <ion-button  color="primary"  (click)="Vestir(3)" *ngIf="!Compra3"  >
+                  <ion-icon name="ios-shirt" ></ion-icon>&nbsp;Vestir
+                </ion-button >
+          </ion-card-content>
+        </ion-card>
+   
+      </div>
+      <div class="modal-footer">
+          <button type="button" mdbBtn color="secondary" class="waves-light btn btn-danger" aria-label="Close" (click)="ModalShop.hide()" mdbWavesEffect>Cerrar</button>
+        <button type="button" mdbBtn color="secondary" class="waves-light btn btn-danger" aria-label="Close" (click)="ModalShop.hide()" mdbWavesEffect>Cerrar</button>
+       
+      </div>
+    </div>
+  </div>
+</div>
+
+<div mdbModal #ModalStadistics="mdbModal" class="modal fade " tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true" [config]="{backdrop: false, ignoreBackdropClick: true}">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        
+        <h4 class="modal-title w-100" id="myModalLabel">Estadisticas</h4>
+      </div>
+      <div class="modal-body">
+        
+      </div>
+      <div class="modal-footer">
+          
+          <button type="button" mdbBtn color="secondary" class="waves-light btn btn-warning"  (click)="Quitar()" mdbWavesEffect>Quitar</button>
+        <button type="button" mdbBtn color="secondary" class="waves-light btn btn-danger" aria-label="Close" (click)="ModalStadistics.hide()" mdbWavesEffect>Cerrar</button>
+      </div>
+    </div>
+  </div>
 </div>
 </ion-content>
+
+

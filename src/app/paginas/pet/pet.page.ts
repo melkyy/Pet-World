@@ -1,10 +1,11 @@
 import { Component, OnInit,ChangeDetectorRef } from '@angular/core';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial/ngx';
 import {ExtrasService} from '../../extras.service';
-import { LoadingController,ToastController } from '@ionic/angular';
+import { LoadingController,ToastController, NavController } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
-import{ShopPage}from '../shop/shop.page';
-import {StadisticsPage}from '../stadistics/stadistics.page'
+import { Storage } from '@ionic/storage';
+
+
 @Component({
   selector: 'app-pet',
   templateUrl: './pet.page.html',
@@ -18,31 +19,135 @@ export class PetPage implements OnInit {
     public loading:LoadingController,
     public Data:ExtrasService,
     public Toastr:ToastController,
-    public modal:ModalController
+    public modal:ModalController,
+    private Storage:Storage,
+    public nav:NavController
     ) { }
 
 
   public monedas:number=0;
   public Adress:string;
-
+  public Vestido:number;
+  public Compra1:boolean=true;
+  public Compra2:boolean=true;
+  public Compra3:boolean=true;
+  
   ngOnInit() {
+  
    this.Adress=this.Data.getExtra();
+   
    this.connect(this.Adress);
+   this.getmonedas();
+   this.getVestido();
+   this.getvestidos();
+  }
+
+  getVestido(){
+    this.Storage.get("Vestidos").then((val)=>{
+      if(val!=undefined){
+        this.Vestido=parseInt(val);
+        
+      }else{
+        this.Vestido=0;
+      }
+    });
+ 
+  }
+  Quitar(){
+    this.Vestido=0;
+    this.Storage.set("Vestidos",0);
+    this.toast("Se ha removido la ropa");
+  }
+  getvestidos(){
+    this.Storage.get("Compra1").then((val)=>{
+      if(val!=undefined){
+        this.Compra1=false;
+      }
+    });
+    this.Storage.get("Compra2").then((val)=>{
+      if(val!=undefined){
+        this.Compra2=false;
+      }
+    });
+    this.Storage.get("Compra3").then((val)=>{
+      if(val!=undefined){
+        this.Compra3=false;
+      }
+    });
   }
 
   
-  async AbrirEstadisticas(){
-    const modal = await this.modal.create({
-      component: ShopPage
+  Comprar(Num){
+   switch(Num){
+     case 1:
+     if(this.monedas>=30){
+      this.monedas=this.monedas-30;
+      this.Storage.set('Monedas',this.monedas);
+      this.Storage.set("Compra1",1);
+      this.toast("Se ha comprado el objeto");
+      this.getvestidos();
+     }else{
+       this.toast("No alcanza");
+     }
+     
+     break;
+     case 2:
+     if(this.monedas>=100){
+      this.monedas=this.monedas-100;
+      this.Storage.set('Monedas',this.monedas);
+      this.Storage.set("Compra2",1);
+      this.toast("Se ha comprado el objeto");
+      this.getvestidos();
+     }else{
+      this.toast("No alcanza");
+     }
+     
+     break;
+     case 3:
+     if(this.monedas>=150){
+       this.monedas=this.monedas-150;
+      this.Storage.set('Monedas',this.monedas);
+      this.Storage.set("Compra3",1);
+      this.toast("Se ha comprado el objeto");
+      this.getvestidos();
+     }else{
+       this.toast("No alcanza");
+     }
+     
+     break;
+   }
+   
+  }
+  Vestir(Num){
+    this.Vestido=Num;
+    this.Storage.set("Vestidos",Num);
+    this.toast("Se ha vestido");
+  }
+  getmonedas(){
+    this.Storage.get('Monedas').then((val)=>{
+      if(val==undefined){
+       this.monedas=0;
+      }else{
+       this.monedas=parseInt(val);
+      }
+     
     });
-    return await modal.present();
+  }
+  
+  async AbrirEstadisticas(){
+    
+    // const modal = await this.modal.create({
+    //   component: 
+    // });
+    // return await modal.present();
   }
   async AbrirPetShop(){
-    const modal = await this.modal.create({
-      component: StadisticsPage
+    
+    // const modal = await this.modal.create({
+    //   component: 
       
-    });
-    return await modal.present();
+    // });
+    // return await modal.present();
   }
 
   async presentLoading(){
@@ -58,8 +163,7 @@ export class PetPage implements OnInit {
       this.loading.dismiss();
       this.deviceConnected();
     }, error => {
-      this.loading.dismiss();
-      this.toast("Error al conectar el dispositivo");
+      this.nav.navigateRoot("/bluethoot");
       
     });
   }
@@ -71,7 +175,7 @@ export class PetPage implements OnInit {
       this.loading.dismiss();
       this.ref.detectChanges();
     }, error => {
-      
+      this.nav.navigateRoot("/bluethoot");
     });
   }
 
@@ -83,7 +187,7 @@ export class PetPage implements OnInit {
 
   handleData(data) {
     this.monedas += parseInt(data);
-   
+    this.Storage.set('Monedas',this.monedas);
   }
 
   async toast(data) {

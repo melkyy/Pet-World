@@ -6,6 +6,10 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { PetPage } from './pet.page';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { IonicStorageModule } from '@ionic/storage';
+
+
 
 const routes: Routes = [
   {
@@ -15,12 +19,16 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [
+
+  imports: [  
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
-  ],
+    RouterModule.forChild(routes),
+    MDBBootstrapModule,IonicStorageModule.forRoot()
+  ],entryComponents:[],
   declarations: [PetPage]
+  
+  
 })
 export class PetPageModule {}

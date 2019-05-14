@@ -9,8 +9,9 @@ const routes: Routes = [
   { path: 'home', loadChildren: './home/home.module#HomePageModule' },
   { path: 'pet', loadChildren: './paginas/pet/pet.module#PetPageModule' },
   { path: 'bluethoot', loadChildren: './paginas/bluethoot/bluethoot.module#BluethootPageModule' },
-  { path: 'shop', loadChildren: './paginas/shop/shop.module#ShopPageModule' },
-  { path: 'stadistics', loadChildren: './paginas/stadistics/stadistics.module#StadisticsPageModule' }
+  
+  
+ 
 
 ];
 

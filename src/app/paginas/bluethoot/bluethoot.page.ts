@@ -3,6 +3,7 @@ import { BluetoothSerial } from '@ionic-native/bluetooth-serial/ngx';
 import { ToastController,NavController } from '@ionic/angular';
 import {ExtrasService} from '../../extras.service';
 import { LoadingController } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
 
 
 
@@ -22,13 +23,14 @@ export class BluethootPage implements OnInit {
      private toastCtrl: ToastController, 
      public loading:LoadingController,
      private nav:NavController,
-     public Data:ExtrasService
+     public Data:ExtrasService,
+     private Storage:Storage
      ) { }
 
   async ngOnInit() {
-
     this.checkBluetoothEnabled();
-    this.listPairedDevices();
+  
+    
   }
 
   async presentLoading() {
@@ -41,6 +43,7 @@ export class BluethootPage implements OnInit {
     this.Bluethoot.isEnabled().then(success => {
       this.listPairedDevices();
       this.checkBluetoothIsConected();
+
     }, error => {
       this.toast("No esta conectado a bluethoot");
       
@@ -49,7 +52,15 @@ export class BluethootPage implements OnInit {
 
   checkBluetoothIsConected(){
     this.Bluethoot.isConnected().then(success=>{
-      this.toast(success);
+        this.Storage.get('Adress').then((val)=>{
+      if(val==undefined){
+        
+        this.listPairedDevices();
+      }else{
+       this.connect(val);
+      }
+     
+    });
     },error=>{
       this.toast("Conectese a un dispositivo");
     });
@@ -76,15 +87,13 @@ export class BluethootPage implements OnInit {
   }
 
 
-  AbrirPet() {
-   
 
-  }
   connect(address) {
     this.presentLoading();
     this.Bluethoot.connect(address).subscribe(async (success) => {
       this.loading.dismiss();
       this.Data.setExtra(address);
+      this.Storage.set("Adress",address);
       this.Bluethoot.disconnect();
       this.nav.navigateRoot("/pet");
     }, error => {

@@ -5,6 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { BluethootPage } from './bluethoot.page';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { IonicStorageModule } from '@ionic/storage';
 
 
 const routes: Routes = [
@@ -20,7 +21,7 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    MDBBootstrapModule.forRoot()
+    MDBBootstrapModule.forRoot(),IonicStorageModule.forRoot()
   ],
   declarations: [BluethootPage]
 })
