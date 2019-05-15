@@ -31,7 +31,8 @@ export class PetPage implements OnInit {
   public Compra1:boolean=true;
   public Compra2:boolean=true;
   public Compra3:boolean=true;
-  
+  public Fechas:string;
+  public arr;
   ngOnInit() {
   
    this.Adress=this.Data.getExtra();
@@ -42,6 +43,14 @@ export class PetPage implements OnInit {
    this.getvestidos();
   }
 
+  generarFecha(){
+    this.Storage.get("FechaMoneda").then((val)=>{
+     if(val!=undefined){
+      this.arr=val.split(",");
+    
+     }
+    });
+  }
   getVestido(){
     this.Storage.get("Vestidos").then((val)=>{
       if(val!=undefined){
@@ -80,8 +89,8 @@ export class PetPage implements OnInit {
   Comprar(Num){
    switch(Num){
      case 1:
-     if(this.monedas>=30){
-      this.monedas=this.monedas-30;
+     if(this.monedas>=49){
+      this.monedas=this.monedas-49;
       this.Storage.set('Monedas',this.monedas);
       this.Storage.set("Compra1",1);
       this.toast("Se ha comprado el objeto");
@@ -92,8 +101,8 @@ export class PetPage implements OnInit {
      
      break;
      case 2:
-     if(this.monedas>=100){
-      this.monedas=this.monedas-100;
+     if(this.monedas>=137){
+      this.monedas=this.monedas-137;
       this.Storage.set('Monedas',this.monedas);
       this.Storage.set("Compra2",1);
       this.toast("Se ha comprado el objeto");
@@ -104,8 +113,8 @@ export class PetPage implements OnInit {
      
      break;
      case 3:
-     if(this.monedas>=150){
-       this.monedas=this.monedas-150;
+     if(this.monedas>=152){
+       this.monedas=this.monedas-152;
       this.Storage.set('Monedas',this.monedas);
       this.Storage.set("Compra3",1);
       this.toast("Se ha comprado el objeto");
@@ -136,10 +145,8 @@ export class PetPage implements OnInit {
   
   async AbrirEstadisticas(){
     
-    // const modal = await this.modal.create({
-    //   component: 
-    // });
-    // return await modal.present();
+    this.generarFecha();
+    
   }
   async AbrirPetShop(){
     
@@ -188,6 +195,17 @@ export class PetPage implements OnInit {
   handleData(data) {
     this.monedas += parseInt(data);
     this.Storage.set('Monedas',this.monedas);
+    this.Storage.get("FechaMoneda").then((val)=>{
+      if(val!=undefined){
+        var displayDate = new Date();
+        this.Storage.set("FechaMoneda",val+","+data+"$                        El "+displayDate.toLocaleDateString()+" a alas "+displayDate.toLocaleTimeString()+"");
+        
+      }else{
+        var displayDate = new Date();
+        this.Storage.set("FechaMoneda",data+"$                        El "+displayDate.toLocaleDateString()+" a alas "+displayDate.toLocaleTimeString()+",");
+        
+      }
+    });
   }
 
   async toast(data) {

@@ -6,7 +6,7 @@
   <img  src="../../../assets/Fox2.gif" *ngIf="Vestido==1" alt="" width="200" height="300" id="pet">
   <img  src="../../../assets/Fox3.gif" *ngIf="Vestido==2" alt="" width="200" height="300" id="pet">
   <img  src="../../../assets/Fox4.gif" *ngIf="Vestido==3" alt="" width="200" height="300" id="pet">
-  <div (click)="ModalStadistics.show()"><img src="../../../assets/statistics.png" width="100" height="100" id="analytics"></div>
+  <div (click)="AbrirEstadisticas();ModalStadistics.show()"><img src="../../../assets/statistics.png" width="100" height="100" id="analytics"></div>
   <div (click)="ModalShop.show()" ><img src="../../../assets/shop.ico"  alt="" width="100" height="100" id="shop"></div>
 </div>
 
@@ -20,12 +20,15 @@
       <div class="modal-body">
         <ion-card class="cardShop">
           <ion-card-header>
-            <img src="../../../assets/Fox2.png" width="150" height="200">
+              <ion-card-header>
+                  <img src="../../../assets/Fox2.png" width="50" height="220">
+              </ion-card-header>
+            
           </ion-card-header>
-        
+          
           <ion-card-content>
               
-              <h3>30.00$</h3>
+              <h3>49.00$</h3>
              
               <br>
               <ion-button  color="success" (click)="Comprar(1)"  *ngIf="Compra1" >
@@ -39,13 +42,13 @@
         <ion-card class="cardShop">
           <ion-card-header>
             <ion-card-header>
-                <img src="../../../assets/Fox3.png"  width="150" height="200" >
+                <img src="../../../assets/Fox3.png"  width="50" height="220" >
             </ion-card-header>
           </ion-card-header>
         
           <ion-card-content>
             
-              <h3>100.00$</h3>
+              <h3>137.00$</h3>
              
             <br>
             <ion-button  color="success" (click)="Comprar(2)" *ngIf="Compra2" >
@@ -59,13 +62,13 @@
         <ion-card class="cardShop">
           <ion-card-header>
             <ion-card-header>
-                <img src="../../../assets/Fox4.png" width="150" height="200">
+                <img src="../../../assets/Fox4.png" width="50" height="220">
             </ion-card-header>
           </ion-card-header>
         
           <ion-card-content>
               
-              <h3>150.00$</h3>
+              <h3>152.00$</h3>
              
             <br>
             <ion-button  color="success" (click)="Comprar(3)" *ngIf="Compra3" >
@@ -79,8 +82,8 @@
    
       </div>
       <div class="modal-footer">
-          <button type="button" mdbBtn color="secondary" class="waves-light btn btn-danger" aria-label="Close" (click)="ModalShop.hide()" mdbWavesEffect>Cerrar</button>
-        <button type="button" mdbBtn color="secondary" class="waves-light btn btn-danger" aria-label="Close" (click)="ModalShop.hide()" mdbWavesEffect>Cerrar</button>
+          <button type="button" mdbBtn class="btn btn-warning"  (click)="Quitar()" mdbWavesEffect>Quitar</button>
+          <button type="button" mdbBtn class="btn btn-danger" aria-label="Close" (click)="ModalShop.hide()" mdbWavesEffect>Cerrar</button>
        
       </div>
     </div>
@@ -92,15 +95,19 @@
     <div class="modal-content">
       <div class="modal-header">
         
-        <h4 class="modal-title w-100" id="myModalLabel">Estadisticas</h4>
+        <h4 class="modal-title w-100" id="myModalLabel">Monedas Agregadas</h4>
       </div>
       <div class="modal-body">
-        
+          <ion-list *ngFor="let i of arr">
+              <ion-item>
+                  <ion-label>{{i}}</ion-label>
+                </ion-item>
+            </ion-list>
       </div>
       <div class="modal-footer">
           
-          <button type="button" mdbBtn color="secondary" class="waves-light btn btn-warning"  (click)="Quitar()" mdbWavesEffect>Quitar</button>
-        <button type="button" mdbBtn color="secondary" class="waves-light btn btn-danger" aria-label="Close" (click)="ModalStadistics.hide()" mdbWavesEffect>Cerrar</button>
+         
+        <button type="button" mdbBtn class="btn btn-danger" aria-label="Close" (click)="ModalStadistics.hide()" mdbWavesEffect>Cerrar</button>
       </div>
     </div>
   </div>
