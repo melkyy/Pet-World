@@ -31,7 +31,7 @@
     "@types/chart.js": "^2.7.52",
     "angular-bootstrap-md": "^7.5.1",
     "bootstrap": "^4.0.0-beta.2",
-    "chart.js": "^2.5.0",
+    "chart.js": "^2.9.4",
     "cordova-android": "7.1.4",
     "cordova-ios": "4.5.5",
     "cordova-plugin-bluetooth-serial": "0.4.7",
